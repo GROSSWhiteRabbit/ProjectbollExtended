@@ -10,11 +10,11 @@ let vx = 1,
   vmy,
   xm,
   ym,
-  t = 1,
   x0 = fiel.getBoundingClientRect().left + 100 + window.pageXOffset,
   y0 = fiel.getBoundingClientRect().top + 100 + window.pageYOffset,
   onx = false,
-  ony = false;
+  ony = false,
+  now;
  
 
 boll.style.left = '108px';
@@ -42,26 +42,28 @@ boll.style.transform = 'translate(-50%, -50%)';
   
 // });
 
+
 boll.addEventListener('mouseenter', (e)=> {
     e.preventDefault();
   
   if (onx || ony) {
-    vx = vx + vmx/4;
-    vy = -Math.abs(vy) + vmy/4;
+    vx = vx + vmx*2;
+    vy = -Math.abs(vy) + vmy*2;
       return;
   }
+  
   onx = true;
 
-  vx = vmx *10;   
+  vx = vmx *5;   
   getVelocityX();
 
   ony = true;
 
-  vy = vmy *10;
+  vy = vmy *5;
   getVelocityY();
 
-
-  const timerX = setInterval(()=>{
+  now = Date.now();
+  const render = ()=>{
       if (vx < 0.0001 && vx > -0.0001) {
         setTimeout(()=> {
             if (vx < 0.0001 && vx > -0.0001){
@@ -85,12 +87,14 @@ boll.addEventListener('mouseenter', (e)=> {
       }
       getVelocityY();
       coordinateYByVelocity();
-      t += 1; 
       if(!onx && !ony){
-          t = 1;
-          clearInterval(timerX);
+          return;
+          
       }
-  }, 25);
+      now = Date.now();
+      requestAnimationFrame(render);
+  };
+  requestAnimationFrame(render);
 
 });
 fiel.addEventListener('mousemove', (e) => {
@@ -125,7 +129,7 @@ const  xm1 = xm;
 
 function getVelocityX() {
 
-      vx = (vx ) - vx/10  ;
+      vx = (vx ) - vx/20  ;
 
 
 
@@ -147,11 +151,11 @@ function coordinateXByVelocity() {
 
 
 
- const x = vx*t/1;
+ const x = vx*t()/1;
  
  boll.style.left = ( x0 + x) +'px';
  x0 = x0 + x ;
-console.log(x0);
+// console.log(x0);
 }
 // y
 
@@ -160,8 +164,8 @@ console.log(x0);
 
 function getVelocityY() {
 
-        vy = (vy + 0.01 ) - vy/10  ;
-
+        vy = (vy + 0.05 ) - vy/20  ;
+console.log(vy);
 
 
 
@@ -175,21 +179,26 @@ function coordinateYByVelocity() {
         y0 = fiel.getBoundingClientRect().top - 18 + window.pageYOffset;
         vy = -vy*0.7;
     }
-    if (y0 > fiel.getBoundingClientRect().bottom -90 + window.pageYOffset ){
+    if (y0 > fiel.getBoundingClientRect().bottom -110 + window.pageYOffset ){
 
-        y0 = fiel.getBoundingClientRect().bottom -92  + window.pageYOffset;
-        vy = -(vy-0.03);
+        y0 = fiel.getBoundingClientRect().bottom -112  + window.pageYOffset;
+        vy = -(vy*0.7 - 0.5);
     }
 
 
 
-   const y = vy*t/1;
+   const y = vy*t()/1;
    
    boll.style.top = ( y0 + y) +'px';
    y0 = y0 + y;
 //    console.log(y0)
 
 }
+
+function t() {
+  return (Date.now() - now);
+}
+
 
 
 });
