@@ -17,10 +17,11 @@ let vx = 1,
   ony = false;
  
 
-
-boll.style.left = '100px';
-boll.style.top = '100px';
+boll.style.left = '108px';
+boll.style.top = '144px';
 boll.style.transform = 'translate(-50%, -50%)';
+
+
 
 // boll.style.transition = ' top 1s,  left 1s';
 
@@ -41,7 +42,8 @@ boll.style.transform = 'translate(-50%, -50%)';
   
 // });
 
-boll.addEventListener('mouseenter', ()=> {
+boll.addEventListener('mouseenter', (e)=> {
+    e.preventDefault();
   
   if (onx || ony) {
     vx = vx + vmx/4;
@@ -49,12 +51,12 @@ boll.addEventListener('mouseenter', ()=> {
       return;
   }
   onx = true;
-//   console.log(vmx);
+
   vx = vmx *10;   
   getVelocityX();
 
   ony = true;
-//   console.log(vmy);
+
   vy = vmy *10;
   getVelocityY();
 
@@ -92,9 +94,11 @@ boll.addEventListener('mouseenter', ()=> {
 
 });
 fiel.addEventListener('mousemove', (e) => {
+    e.preventDefault();
   xm = e.pageX;
   ym = e.pageY;
   getVelocityMouse();
+  
 });
 
 
@@ -104,16 +108,17 @@ function getVelocityMouse(){
 const  xm1 = xm;
   setTimeout(() => {
       const  xm2  = xm; 
-      vmx = (xm2-xm1)/10;
-      // console.log(vm)
-  }, 10);
+      vmx = (xm2-xm1)/20;
+
+  }, 20);
 
   const  ym1 = ym;
   setTimeout(() => {
       const  ym2  = ym; 
-      vmy = (ym2-ym1)/10;
-      // console.log(vm)
-  }, 10);
+      vmy = (ym2-ym1)/20;
+
+
+  }, 20);
 
 }
 
@@ -124,7 +129,7 @@ function getVelocityX() {
 
 
 
-  // console.log(vx); 
+
 }
 
 
@@ -146,13 +151,8 @@ function coordinateXByVelocity() {
  
  boll.style.left = ( x0 + x) +'px';
  x0 = x0 + x ;
-//    console.log(x0);
+console.log(x0);
 }
-// console.log(boll.clientHeight);
-function renderByX(){
-
-}
-
 // y
 
 
@@ -164,11 +164,12 @@ function getVelocityY() {
 
 
 
-  //   console.log(vy); 
+
 }
 
 
 function coordinateYByVelocity() {
+
     if (y0 < fiel.getBoundingClientRect().top - 20 + window.pageYOffset){
         
         y0 = fiel.getBoundingClientRect().top - 18 + window.pageYOffset;
@@ -186,8 +187,9 @@ function coordinateYByVelocity() {
    
    boll.style.top = ( y0 + y) +'px';
    y0 = y0 + y;
-//    console.log(y0);
+//    console.log(y0)
+
 }
-// console.log(boll.clientHeight);
+
 
 });
