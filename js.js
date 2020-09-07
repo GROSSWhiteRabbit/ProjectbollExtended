@@ -47,7 +47,7 @@ boll.addEventListener('mouseenter', (e)=> {
     e.preventDefault();
   
   if (onx || ony) {
-    vx = vx + vmx*2;
+    vx = vx + vmx*4;
     vy = -Math.abs(vy) + vmy*2;
       return;
   }
