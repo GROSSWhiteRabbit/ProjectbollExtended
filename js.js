@@ -54,19 +54,19 @@ boll.addEventListener('mouseenter', (e)=> {
   
   onx = true;
 
-  vx = vmx *5;   
+  vx = vmx *4;   
   getVelocityX();
 
   ony = true;
 
-  vy = vmy *5;
+  vy = vmy *2;
   getVelocityY();
 
   now = Date.now();
   const render = ()=>{
-      if (vx < 0.0001 && vx > -0.0001) {
+      if (vx < 0.001 && vx > -0.001) {
         setTimeout(()=> {
-            if (vx < 0.0001 && vx > -0.0001){
+            if (vx < 0.001 && vx > -0.001 && !ony ){
                 onx = false;
             }
           },100);
@@ -188,10 +188,10 @@ function coordinateYByVelocity() {
    boll.style.top = ( y0 + y) +'px';
    y0 = y0 + y;
 
-   if (y0 > fiel.getBoundingClientRect().bottom - 95   + window.pageYOffset ){
+   if (y0 > fiel.getBoundingClientRect().bottom - 93   + window.pageYOffset ){
 
-    y0 = fiel.getBoundingClientRect().bottom - 95 + window.pageYOffset;
-    vy = -(vy*0.7 - 0.5);
+    y0 = fiel.getBoundingClientRect().bottom - 93 + window.pageYOffset;
+    vy = -(vy - vy/Math.abs(vy)*0.1);
 }
   //  console.log(y)
 
