@@ -179,11 +179,7 @@ function coordinateYByVelocity() {
         y0 = fiel.getBoundingClientRect().top - 18 + window.pageYOffset;
         vy = -vy*0.7;
     }
-    if (y0 > fiel.getBoundingClientRect().bottom -110 + window.pageYOffset ){
-
-        y0 = fiel.getBoundingClientRect().bottom -112  + window.pageYOffset;
-        vy = -(vy*0.7 - 0.5);
-    }
+    
 
 
 
@@ -191,6 +187,12 @@ function coordinateYByVelocity() {
    
    boll.style.top = ( y0 + y) +'px';
    y0 = y0 + y;
+
+   if (y0 > fiel.getBoundingClientRect().bottom - 95   + window.pageYOffset ){
+
+    y0 = fiel.getBoundingClientRect().bottom - 95 + window.pageYOffset;
+    vy = -(vy*0.7 - 0.5);
+}
 //    console.log(y0)
 
 }
