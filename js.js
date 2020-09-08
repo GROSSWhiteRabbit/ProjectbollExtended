@@ -165,7 +165,7 @@ function coordinateXByVelocity() {
 function getVelocityY() {
 
         vy = (vy + 0.05 ) - vy/20  ;
-console.log(vy);
+// console.log(vy);
 
 
 
@@ -193,7 +193,7 @@ function coordinateYByVelocity() {
     y0 = fiel.getBoundingClientRect().bottom - 95 + window.pageYOffset;
     vy = -(vy*0.7 - 0.5);
 }
-//    console.log(y0)
+  //  console.log(y)
 
 }
 
