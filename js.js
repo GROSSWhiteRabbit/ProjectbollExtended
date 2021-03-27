@@ -27,7 +27,8 @@ document.addEventListener("DOMContentLoaded", () => {
         y0 = 100,
         onx = false,
         ony = false,
-        now;
+        now,
+        kickGrassTimePlayStart = Date.now();
 
     boll.style.left = x0 + "px";
     boll.style.top = y0 + "px";
@@ -56,6 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         onx = true;
+        now = Date.now();
 
         vx = vmx * 4;
         getVelocityX();
@@ -65,7 +67,6 @@ document.addEventListener("DOMContentLoaded", () => {
         vy = vmy * 2;
         getVelocityY();
 
-        now = Date.now();
         const render = () => {
             if (vx < 0.001 && vx > -0.001) {
                 setTimeout(() => {
@@ -120,7 +121,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function getVelocityX() {
-        vx = vx - vx / 20;
+        vx = vx - (vx / 20) * (t() / 16) ;
     }
 
     function coordinateXByVelocity() {
@@ -161,19 +162,20 @@ document.addEventListener("DOMContentLoaded", () => {
     // y
 
     function getVelocityY() {
-        vy = vy + 0.05 - vy / 20;
+        vy = vy + (0.05 - vy / 20)* (t() / 16);
         // console.log(vy);
     }
-
     function coordinateYByVelocity() {
         if (y0 < 0) {
-          const kickUpClone = kickUp.cloneNode();
-          if( Math.abs(vy)> 5){
-            kickUpClone.volume = 1
-          } else {
-            kickUpClone.volume = Math.abs(vy/5);
-          }
-          kickUpClone.play()
+            const kickUpClone = kickUp.cloneNode();
+            if( Math.abs(vy)> 5){
+              kickUpClone.volume = 1
+            } else {
+              kickUpClone.volume = Math.abs(vy/5);
+            }
+            kickUpClone.play()
+
+
           y0 = 2;
           vy = -vy * 0.7;
         }
@@ -184,13 +186,17 @@ document.addEventListener("DOMContentLoaded", () => {
         y0 = y0 + y;
 
         if (y0 > fiel.clientHeight - 35) {
-          const kickGrassClone = kickGrass.cloneNode();
-          if( Math.abs(vy)> 1){
-            kickGrassClone.volume = 1
-          } else {
-            kickGrassClone.volume = Math.abs(vy/1);
+          if(Date.now()-kickGrassTimePlayStart>200){
+            const kickGrassClone = kickGrass.cloneNode();
+            if( Math.abs(vy)> 1){
+              kickGrassClone.volume = 1
+            } else {
+              kickGrassClone.volume = Math.abs(vy/1.2);
+            }
+            kickGrassClone.play()
+            kickGrassTimePlayStart = Date.now();
           }
-          kickGrassClone.play()
+          
             y0 = fiel.clientHeight - 35;
             vy = -(vy - (vy / Math.abs(vy)) * 0.1);
         }
